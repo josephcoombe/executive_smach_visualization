@@ -1054,6 +1054,11 @@ def main():
     app.MainLoop()
 
 if __name__ == '__main__':
+    ros_node_name = 'smach_viewer'                  # backwards compatibility
+    if (len(sys.argv) > 2):                         # if run from ROS *.launch file
+        ros_node_name = sys.argv[-2].split('=')[1]  # allows user to send -f prefix in *.launch file
+        del sys.argv[-2:]                           #   (note: autofocus causes HEARTBEAT bug)
+        
     rospy.init_node('smach_viewer',anonymous=False, disable_signals=True,log_level=rospy.INFO)
 
     main()
